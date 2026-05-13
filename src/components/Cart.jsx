@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useCart } from '../context/CartContext';
 import { FiX, FiTrash2 } from 'react-icons/fi';
+import { API_URL } from '../config';
 import './Cart.css';
 import perfume1 from '../assets/perfume_1.png';
 import perfume2 from '../assets/perfume_2.png';
@@ -31,7 +32,7 @@ const Cart = () => {
   const handleCheckoutSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:5000/api/orders', {
+      const response = await fetch(`${API_URL}/api/orders`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

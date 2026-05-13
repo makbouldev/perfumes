@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FiBox, FiList, FiLogOut, FiEdit2, FiTrash2, FiPlus } from 'react-icons/fi';
+import { API_URL } from '../config';
 import './Admin.css';
 
 const AdminDashboard = () => {
@@ -22,12 +23,12 @@ const AdminDashboard = () => {
   const fetchData = async () => {
     try {
       if (activeTab === 'orders') {
-        const res = await fetch('http://localhost:5000/api/orders', {
+        const res = await fetch(`${API_URL}/api/orders`, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         if (res.ok) setOrders(await res.json());
       } else {
-        const res = await fetch('http://localhost:5000/api/products');
+        const res = await fetch(`${API_URL}/api/products`);
         if (res.ok) setProducts(await res.json());
       }
     } catch (err) {
@@ -45,7 +46,7 @@ const AdminDashboard = () => {
     const notes = prompt("Enter product notes:");
     const price = parseFloat(prompt("Enter price:"));
     if (name && notes && price) {
-      await fetch('http://localhost:5000/api/products', {
+      await fetch(`${API_URL}/api/products`, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
@@ -59,7 +60,7 @@ const AdminDashboard = () => {
 
   const handleDeleteProduct = async (id) => {
     if (window.confirm("Are you sure you want to delete this product?")) {
-      await fetch(`http://localhost:5000/api/products/${id}`, {
+      await fetch(`${API_URL}/api/products/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });

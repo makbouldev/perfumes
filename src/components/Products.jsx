@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Products.css';
 import ProductCard from './ProductCard';
+import { API_URL } from '../config';
 import perfume1 from '../assets/perfume_1.png';
 import perfume2 from '../assets/perfume_2.png';
 import perfume3 from '../assets/perfume_3.png';
@@ -24,7 +25,10 @@ const Products = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/products');
+        const response = await fetch(`${API_URL}/api/products`);
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
         const data = await response.json();
         setProducts(data);
         setLoading(false);
