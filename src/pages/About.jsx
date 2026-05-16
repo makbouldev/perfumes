@@ -14,7 +14,7 @@ const About = () => {
         <div className="about-text glass">
           <h2>A Heritage of Elegance</h2>
           <p>
-            Founded in the heart of Paris, L'Aura Parfums is dedicated to crafting 
+            Founded in the heart of Paris, RYME PERFUM is dedicated to crafting 
             unforgettable olfactory experiences. We believe that a perfume is more 
             than just a scent—it is a signature, an emotion, and a memory.
           </p>

@@ -2,23 +2,8 @@ import React, { useState } from 'react';
 import { useCart } from '../context/CartContext';
 import { FiX, FiTrash2 } from 'react-icons/fi';
 import { API_URL } from '../config';
+import { resolveImageUrl } from '../utils/imageResolver';
 import './Cart.css';
-import perfume1 from '../assets/perfume_1.png';
-import perfume2 from '../assets/perfume_2.png';
-import perfume3 from '../assets/perfume_3.png';
-import perfume4 from '../assets/perfume_4.png';
-import perfume5 from '../assets/perfume_5.png';
-import perfume6 from '../assets/perfume_6.png';
-
-// Fallback map since imagePath is stored as string
-const imageMap = {
-  'perfume_1.png': perfume1,
-  'perfume_2.png': perfume2,
-  'perfume_3.png': perfume3,
-  'perfume_4.png': perfume4,
-  'perfume_5.png': perfume5,
-  'perfume_6.png': perfume6
-};
 
 const Cart = () => {
   const { cartItems, isCartOpen, toggleCart, removeFromCart, cartTotal, clearCart } = useCart();
@@ -101,7 +86,7 @@ const Cart = () => {
             ) : (
               cartItems.map((item) => (
                 <div key={item.id} className="cart-item">
-                  <img src={imageMap[item.imagePath]} alt={item.name} className="cart-item-img" />
+                  <img src={resolveImageUrl(item.imagePath)} alt={item.name} className="cart-item-img" />
                   <div className="cart-item-info">
                     <h4>{item.name}</h4>
                     <p className="cart-item-qty">Qty: {item.quantity}</p>

@@ -21,7 +21,7 @@ const Navbar = () => {
     <nav className={`navbar ${scrolled ? 'scrolled glass' : ''}`}>
       <div className="navbar-container">
         <div className="logo">
-          <Link to="/">L'Aura <span>Parfums</span></Link>
+          <Link to="/">RYME <span>PERFUM</span></Link>
         </div>
 
         <div className={`nav-links ${mobileMenuOpen ? 'active glass' : ''}`}>

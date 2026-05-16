@@ -6,7 +6,7 @@ const Home = () => {
   return (
     <div className="page-transition fade-in">
       <Hero />
-      <Products />
+      <Products limit={6} showViewAll={true} />
     </div>
   );
 };

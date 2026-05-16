@@ -1,24 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import './Products.css';
 import ProductCard from './ProductCard';
 import { API_URL } from '../config';
-import perfume1 from '../assets/perfume_1.png';
-import perfume2 from '../assets/perfume_2.png';
-import perfume3 from '../assets/perfume_3.png';
-import perfume4 from '../assets/perfume_4.png';
-import perfume5 from '../assets/perfume_5.png';
-import perfume6 from '../assets/perfume_6.png';
+import { resolveImageUrl } from '../utils/imageResolver';
 
-const imageMap = {
-  'perfume_1.png': perfume1,
-  'perfume_2.png': perfume2,
-  'perfume_3.png': perfume3,
-  'perfume_4.png': perfume4,
-  'perfume_5.png': perfume5,
-  'perfume_6.png': perfume6
-};
-
-const Products = () => {
+const Products = ({ limit, showViewAll = false }) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -54,20 +41,26 @@ const Products = () => {
         {loading ? (
           <p>Loading collection...</p>
         ) : (
-          products.map((product, index) => (
+          products
+            .slice()
+            .reverse()
+            .slice(0, limit || products.length)
+            .map((product, index) => (
             <ProductCard 
               key={product.id}
               {...product}
-              image={imageMap[product.imagePath]}
+              image={resolveImageUrl(product.imagePath)}
+              imagePath={product.imagePath}
               delay={index + 1}
             />
           ))
         )}
       </div>
-      
-      <div className="view-all-container fade-in delay-3">
-        <button className="secondary-btn view-all-btn">View Full Collection</button>
-      </div>
+      {showViewAll && (
+        <div className="view-all-container fade-in delay-3">
+          <Link to="/collection" className="secondary-btn view-all-btn">View Full Collection</Link>
+        </div>
+      )}
     </section>
   );
 };

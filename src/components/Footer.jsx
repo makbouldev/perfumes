@@ -10,7 +10,7 @@ const Footer = () => {
         <div className="footer-grid">
           <div className="footer-brand">
             <div className="logo">
-              <Link to="/">L'Aura <span>Parfums</span></Link>
+              <Link to="/">RYME <span>PERFUM</span></Link>
             </div>
             <p className="brand-desc">
               Crafting unforgettable olfactory experiences through the finest ingredients and artisanal passion.
@@ -53,7 +53,7 @@ const Footer = () => {
         </div>
         
         <div className="footer-bottom">
-          <p>&copy; {new Date().getFullYear()} L'Aura Parfums. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} RYME PERFUM. All rights reserved.</p>
           <div className="footer-legal">
             <a href="#">Privacy Policy</a>
             <a href="#">Terms of Service</a>
