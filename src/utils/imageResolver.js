@@ -17,6 +17,9 @@ export const imageMap = {
 
 export const resolveImageUrl = (imagePath) => {
   if (!imagePath) return perfume1;
+  if (imagePath.startsWith('data:')) {
+    return imagePath;
+  }
   if (imagePath.startsWith('/uploads/')) {
     return `${API_URL}${imagePath}`;
   }

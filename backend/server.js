@@ -12,26 +12,24 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-// Create uploads directory if it doesn't exist
+// Create uploads directory if it doesn't exist (failsafe for local dev)
 const uploadsDir = path.join(__dirname, 'uploads');
-if (!fs.existsSync(uploadsDir)) {
-  fs.mkdirSync(uploadsDir);
+try {
+  if (!fs.existsSync(uploadsDir)) {
+    fs.mkdirSync(uploadsDir);
+  }
+} catch (e) {
+  console.log('Unable to create uploads directory:', e.message);
 }
 
 // Serve static files
 app.use('/uploads', express.static(uploadsDir));
 
-// Configure multer storage
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, uploadsDir);
-  },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    cb(null, uniqueSuffix + path.extname(file.originalname));
-  }
+// Configure multer storage (memoryStorage to work on serverless like Vercel)
+const upload = multer({ 
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 5 * 1024 * 1024 } // 5MB limit
 });
-const upload = multer({ storage: storage });
 
 // Basic Authentication Middleware for Admin routes
 const authenticate = (req, res, next) => {
@@ -60,7 +58,12 @@ app.get('/api/products', (req, res) => {
 // POST new product (Admin)
 app.post('/api/products', authenticate, upload.single('image'), (req, res) => {
   const { name, notes, price } = req.body;
-  const imagePath = req.file ? `/uploads/${req.file.filename}` : 'perfume_1.png';
+  let imagePath = 'perfume_1.png';
+  
+  if (req.file) {
+    // Convert buffer to base64 so it can be stored persistently in the database
+    imagePath = `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`;
+  }
   
   db.run('INSERT INTO products (name, notes, price, imagePath) VALUES (?, ?, ?, ?)', 
     [name, notes, price, imagePath], 
