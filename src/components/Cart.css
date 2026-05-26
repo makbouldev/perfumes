@@ -215,3 +215,118 @@
 .checkout-actions .secondary-btn:hover {
   background: rgba(0, 0, 0, 0.05);
 }
+
+/* Order Success Modal */
+.order-success-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  z-index: 2000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.order-success-modal-content {
+  background: var(--bg-color);
+  padding: 3rem;
+  border-radius: 20px;
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  text-align: center;
+  max-width: 450px;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.order-success-modal-content h2 {
+  font-family: var(--font-heading);
+  color: var(--accent-gold);
+  font-size: 1.8rem;
+  margin: 0;
+}
+
+.order-success-modal-content p {
+  color: var(--text-primary);
+  font-size: 1.1rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.order-success-modal-content .subtext {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+.close-modal-btn {
+  margin-top: 1rem;
+  padding: 0.8rem 2rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+/* Checkmark Animation */
+.success-icon-wrapper {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 0.5rem;
+}
+
+.checkmark {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: block;
+  stroke-width: 2;
+  stroke: var(--accent-gold);
+  stroke-miterlimit: 10;
+  box-shadow: inset 0px 0px 0px var(--accent-gold);
+  animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out 0s both;
+}
+
+.checkmark__circle {
+  stroke-dasharray: 166;
+  stroke-dashoffset: 166;
+  stroke-width: 2;
+  stroke-miterlimit: 10;
+  stroke: var(--accent-gold);
+  fill: none;
+  animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+
+.checkmark__check {
+  transform-origin: 50% 50%;
+  stroke-dasharray: 48;
+  stroke-dashoffset: 48;
+  stroke: var(--bg-color);
+  animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+}
+
+@keyframes stroke {
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes scale {
+  0%, 100% {
+    transform: none;
+  }
+  50% {
+    transform: scale3d(1.1, 1.1, 1);
+  }
+}
+
+@keyframes fill {
+  100% {
+    box-shadow: inset 0px 0px 0px 40px var(--accent-gold);
+  }
+}
+

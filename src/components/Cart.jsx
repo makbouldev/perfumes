@@ -8,10 +8,15 @@ import './Cart.css';
 const Cart = () => {
   const { cartItems, isCartOpen, toggleCart, removeFromCart, cartTotal, clearCart } = useCart();
   const [isCheckingOut, setIsCheckingOut] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', address: '' });
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleCloseSuccessModal = () => {
+    setShowSuccessModal(false);
   };
 
   const handleCheckoutSubmit = async (e) => {
@@ -30,11 +35,11 @@ const Cart = () => {
       });
       
       if (response.ok) {
-        alert("Thank you for your purchase! Your luxury fragrance is on its way.");
         clearCart();
         setIsCheckingOut(false);
         setFormData({ name: '', email: '', phone: '', address: '' });
         toggleCart();
+        setShowSuccessModal(true);
       } else {
         alert("There was an issue processing your order.");
       }
@@ -125,6 +130,25 @@ const Cart = () => {
           )}
         </div>
       </div>
+
+      {showSuccessModal && (
+        <div className="order-success-modal-backdrop fade-in" onClick={handleCloseSuccessModal}>
+          <div className="order-success-modal-content glass scale-in" onClick={(e) => e.stopPropagation()}>
+            <div className="success-icon-wrapper">
+              <svg className="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                <circle className="checkmark__circle" cx="26" cy="26" r="25" fill="none" />
+                <path className="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+              </svg>
+            </div>
+            <h2>Merci pour votre commande !</h2>
+            <p>Votre commande a été enregistrée avec succès.</p>
+            <p className="subtext">Nous allons vous contacter très bientôt pour confirmer les détails de la livraison.</p>
+            <button className="primary-btn close-modal-btn" onClick={handleCloseSuccessModal}>
+              Continuer
+            </button>
+          </div>
+        </div>
+      )}
     </>
   );
 };
