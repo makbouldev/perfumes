@@ -76,10 +76,7 @@ const Cart = () => {
                 <label>Full Name</label>
                 <input type="text" name="name" value={formData.name} onChange={handleInputChange} required />
               </div>
-              <div className="form-group">
-                <label>Email</label>
-                <input type="email" name="email" value={formData.email} onChange={handleInputChange} required />
-              </div>
+
               <div className="form-group">
                 <label>Phone Number</label>
                 <input type="tel" name="phone" value={formData.phone} onChange={handleInputChange} required />
