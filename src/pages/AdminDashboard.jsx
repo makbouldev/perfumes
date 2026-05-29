@@ -215,11 +215,9 @@ const AdminDashboard = () => {
                           value={order.status}
                           onChange={(e) => handleStatusChange(order.id, e.target.value)}
                         >
-                          <option value="Pending">En attente (Pending)</option>
-                          <option value="Confirmed">Confirmé (Confirmed)</option>
-                          <option value="Shipped">Expédié (Shipped)</option>
-                          <option value="Delivered">Livré (Delivered)</option>
-                          <option value="Cancelled">Annulé (Cancelled)</option>
+                          <option value="Pending">En attente</option>
+                          <option value="Confirmed">Confirmé</option>
+                          <option value="Cancelled">Annulé</option>
                         </select>
                       </td>
                       <td>
