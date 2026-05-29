@@ -133,7 +133,7 @@ const AdminDashboard = () => {
                       <td>{order.customerEmail}</td>
                       <td>{order.phone}</td>
                       <td>{order.address}</td>
-                      <td>${order.totalAmount}</td>
+                      <td>{order.totalAmount} DH</td>
                       <td>{new Date(order.createdAt).toLocaleDateString()}</td>
                       <td><span className="status-badge">{order.status}</span></td>
                     </tr>
@@ -169,7 +169,7 @@ const AdminDashboard = () => {
                       <td><img src={resolveImageUrl(product.imagePath)} alt="" className="admin-thumb" /></td>
                       <td>{product.name}</td>
                       <td>{product.notes}</td>
-                      <td>${product.price}</td>
+                      <td>{product.price} DH</td>
                       <td>
                         <button className="action-btn delete" onClick={() => handleDeleteProduct(product.id)}>
                           <FiTrash2 />
@@ -215,7 +215,7 @@ const AdminDashboard = () => {
                 />
               </div>
               <div className="form-group">
-                <label>Price ($)</label>
+                <label>Price (DH)</label>
                 <input 
                   type="number" 
                   min="0"

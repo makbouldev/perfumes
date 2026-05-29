@@ -24,7 +24,7 @@ const ProductCard = ({ id, image, imagePath, name, notes, price, delay }) => {
       <div className="card-info">
         <span className="product-notes">{notes}</span>
         <h3 className="product-name">{name}</h3>
-        <span className="product-price">${price}</span>
+        <span className="product-price">{price} DH</span>
       </div>
     </div>
   );

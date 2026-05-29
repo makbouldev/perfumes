@@ -95,7 +95,7 @@ const Cart = () => {
                   <div className="cart-item-info">
                     <h4>{item.name}</h4>
                     <p className="cart-item-qty">Qty: {item.quantity}</p>
-                    <p className="cart-item-price">${item.price * item.quantity}</p>
+                    <p className="cart-item-price">{item.price * item.quantity} DH</p>
                   </div>
                   <button 
                     className="remove-item-btn" 
@@ -112,7 +112,7 @@ const Cart = () => {
         <div className="cart-footer">
           <div className="cart-total">
             <span>Total:</span>
-            <span>${cartTotal}</span>
+            <span>{cartTotal} DH</span>
           </div>
           {isCheckingOut ? (
             <div className="checkout-actions">
