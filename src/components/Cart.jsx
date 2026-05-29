@@ -22,6 +22,9 @@ const Cart = () => {
   const handleCheckoutSubmit = async (e) => {
     e.preventDefault();
     try {
+      // Create a summary of what they bought
+      const itemsSummary = cartItems.map(item => `${item.quantity}x ${item.name}`).join(', ');
+
       const response = await fetch(`${API_URL}/api/orders`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -30,7 +33,8 @@ const Cart = () => {
           customerEmail: formData.email,
           phone: formData.phone,
           address: formData.address,
-          totalAmount: cartTotal
+          totalAmount: cartTotal,
+          items: itemsSummary
         })
       });
       

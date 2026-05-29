@@ -129,6 +129,32 @@ const AdminDashboard = () => {
     }
   };
 
+  const handleDeleteOrder = async (id) => {
+    if (window.confirm("Are you sure you want to delete this order?")) {
+      await fetch(`${API_URL}/api/orders/${id}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      fetchData();
+    }
+  };
+
+  const handleStatusChange = async (id, newStatus) => {
+    try {
+      await fetch(`${API_URL}/api/orders/${id}`, {
+        method: 'PUT',
+        headers: { 
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ status: newStatus })
+      });
+      fetchData();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <div className="admin-dashboard fade-in">
       <div className="admin-sidebar glass">
@@ -164,9 +190,11 @@ const AdminDashboard = () => {
                     <th>Customer</th>
                     <th>Phone</th>
                     <th>Address</th>
+                    <th>Items</th>
                     <th>Total</th>
                     <th>Date</th>
                     <th>Status</th>
+                    <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -178,9 +206,27 @@ const AdminDashboard = () => {
                       <td>{order.customerName || order.customername}</td>
                       <td>{order.phone}</td>
                       <td>{order.address}</td>
+                      <td>{order.items}</td>
                       <td>{order.totalAmount || order.totalamount} DH</td>
                       <td>{new Date(order.createdAt || order.createdat).toLocaleDateString()}</td>
-                      <td><span className="status-badge">{order.status}</span></td>
+                      <td>
+                        <select 
+                          className="status-select"
+                          value={order.status}
+                          onChange={(e) => handleStatusChange(order.id, e.target.value)}
+                        >
+                          <option value="Pending">En attente (Pending)</option>
+                          <option value="Confirmed">Confirmé (Confirmed)</option>
+                          <option value="Shipped">Expédié (Shipped)</option>
+                          <option value="Delivered">Livré (Delivered)</option>
+                          <option value="Cancelled">Annulé (Cancelled)</option>
+                        </select>
+                      </td>
+                      <td>
+                        <button className="action-btn delete" onClick={() => handleDeleteOrder(order.id)}>
+                          <FiTrash2 />
+                        </button>
+                      </td>
                     </tr>
                   ))}
                 </tbody>

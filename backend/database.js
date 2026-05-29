@@ -138,9 +138,13 @@ if (isProduction) {
         phone TEXT NOT NULL,
         address TEXT NOT NULL,
         totalAmount REAL NOT NULL,
+        items TEXT,
         status TEXT DEFAULT 'Pending',
         createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
       )`));
+      
+      // Attempt to upgrade existing tables
+      try { await client.query('ALTER TABLE orders ADD COLUMN items TEXT'); } catch (e) {}
 
       console.log('PostgreSQL tables initialized.');
       client.release();
@@ -212,9 +216,13 @@ if (isProduction) {
         phone TEXT NOT NULL,
         address TEXT NOT NULL,
         totalAmount REAL NOT NULL,
+        items TEXT,
         status TEXT DEFAULT 'Pending',
         createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
-      )`);
+      )`, () => {
+        // Attempt to upgrade existing table
+        localDb.run('ALTER TABLE orders ADD COLUMN items TEXT', () => {});
+      });
     }
   });
   db = localDb;

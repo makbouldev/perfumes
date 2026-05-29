@@ -94,13 +94,21 @@ app.delete('/api/products/:id', authenticate, (req, res) => {
 
 // POST new order (Public - from Cart Checkout)
 app.post('/api/orders', (req, res) => {
-  const { customerName, customerEmail, phone, address, totalAmount } = req.body;
+  const { customerName, customerEmail, phone, address, totalAmount, items } = req.body;
   // In a real app we'd also store the order items
-  db.run('INSERT INTO orders (customerName, customerEmail, phone, address, totalAmount) VALUES (?, ?, ?, ?, ?)', 
-    [customerName || 'Guest', customerEmail || 'guest@example.com', phone, address, totalAmount], 
+  db.run('INSERT INTO orders (customerName, customerEmail, phone, address, totalAmount, items) VALUES (?, ?, ?, ?, ?, ?)', 
+    [customerName || 'Guest', customerEmail || 'guest@example.com', phone, address, totalAmount, items || ''], 
     function(err) {
       if (err) res.status(500).json({ error: err.message });
       else res.json({ id: this.lastID, status: 'Success' });
+  });
+});
+
+// DELETE order (Admin)
+app.delete('/api/orders/:id', authenticate, (req, res) => {
+  db.run('DELETE FROM orders WHERE id = ?', req.params.id, function(err) {
+    if (err) res.status(500).json({ error: err.message });
+    else res.json({ deleted: this.changes });
   });
 });
 
