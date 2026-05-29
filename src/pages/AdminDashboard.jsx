@@ -162,7 +162,6 @@ const AdminDashboard = () => {
                   <tr>
                     <th>ID</th>
                     <th>Customer</th>
-                    <th>Email</th>
                     <th>Phone</th>
                     <th>Address</th>
                     <th>Total</th>
@@ -172,16 +171,15 @@ const AdminDashboard = () => {
                 </thead>
                 <tbody>
                   {orders.length === 0 ? (
-                    <tr><td colSpan="8" className="text-center">No orders found.</td></tr>
+                    <tr><td colSpan="7" className="text-center">No orders found.</td></tr>
                   ) : orders.map(order => (
                     <tr key={order.id}>
                       <td>#{order.id}</td>
-                      <td>{order.customerName}</td>
-                      <td>{order.customerEmail}</td>
+                      <td>{order.customerName || order.customername}</td>
                       <td>{order.phone}</td>
                       <td>{order.address}</td>
-                      <td>{order.totalAmount} DH</td>
-                      <td>{new Date(order.createdAt).toLocaleDateString()}</td>
+                      <td>{order.totalAmount || order.totalamount} DH</td>
+                      <td>{new Date(order.createdAt || order.createdat).toLocaleDateString()}</td>
                       <td><span className="status-badge">{order.status}</span></td>
                     </tr>
                   ))}
