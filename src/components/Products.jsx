@@ -49,8 +49,8 @@ const Products = ({ limit, showViewAll = false }) => {
             <ProductCard 
               key={product.id}
               {...product}
-              image={resolveImageUrl(product.imagePath)}
-              imagePath={product.imagePath}
+              image={resolveImageUrl(product.imagePath || product.imagepath)}
+              imagePath={product.imagePath || product.imagepath}
               delay={index + 1}
             />
           ))

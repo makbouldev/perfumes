@@ -213,7 +213,7 @@ const AdminDashboard = () => {
                   {products.map(product => (
                     <tr key={product.id}>
                       <td>{product.id}</td>
-                      <td><img src={resolveImageUrl(product.imagePath)} alt="" className="admin-thumb" /></td>
+                      <td><img src={resolveImageUrl(product.imagePath || product.imagepath)} alt="" className="admin-thumb" /></td>
                       <td>{product.name}</td>
                       <td>{product.notes}</td>
                       <td>{product.price} DH</td>
