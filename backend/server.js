@@ -56,20 +56,17 @@ app.get('/api/products', (req, res) => {
 });
 
 // POST new product (Admin)
-app.post('/api/products', authenticate, upload.single('image'), (req, res) => {
-  const { name, notes, price } = req.body;
-  let imagePath = 'perfume_1.png';
+app.post('/api/products', authenticate, (req, res) => {
+  const { name, notes, price, imagePath } = req.body;
   
-  if (req.file) {
-    // Convert buffer to base64 so it can be stored persistently in the database
-    imagePath = `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`;
-  }
+  // Provide a default image if none provided
+  const finalImagePath = imagePath || 'perfume_1.png';
   
   db.run('INSERT INTO products (name, notes, price, imagePath) VALUES (?, ?, ?, ?)', 
-    [name, notes, price, imagePath], 
+    [name, notes, price, finalImagePath], 
     function(err) {
       if (err) res.status(500).json({ error: err.message });
-      else res.json({ id: this.lastID, name, notes, price, imagePath });
+      else res.json({ id: this.lastID, name, notes, price, imagePath: finalImagePath });
   });
 });
 

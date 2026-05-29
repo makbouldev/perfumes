@@ -47,21 +47,39 @@ const AdminDashboard = () => {
 
   const handleAddProductSubmit = async (e) => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append('name', newProduct.name);
-    formData.append('notes', newProduct.notes);
-    formData.append('price', newProduct.price);
+    
+    let base64Image = '';
+    
     if (selectedFile) {
-      formData.append('image', selectedFile);
+      const reader = new FileReader();
+      reader.readAsDataURL(selectedFile);
+      reader.onload = async () => {
+        base64Image = reader.result;
+        await submitProduct(base64Image);
+      };
+      reader.onerror = (error) => {
+        console.error('Error reading file:', error);
+        submitProduct('');
+      };
+    } else {
+      await submitProduct('');
     }
+  };
 
+  const submitProduct = async (base64Image) => {
     try {
       await fetch(`${API_URL}/api/products`, {
         method: 'POST',
         headers: { 
-          'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
         },
-        body: formData
+        body: JSON.stringify({
+          name: newProduct.name,
+          notes: newProduct.notes,
+          price: newProduct.price,
+          imagePath: base64Image
+        })
       });
       setIsModalOpen(false);
       setNewProduct({ name: '', notes: '', price: '' });
